@@ -14,15 +14,20 @@ use React\Promise\TestCase;
  */
 class FulfilledPromiseTest extends TestCase
 {
+    /**
+     * @use PromiseSettledTestTrait<T>
+     * @use PromiseFulfilledTestTrait<T>
+     */
     use PromiseSettledTestTrait,
         PromiseFulfilledTestTrait;
 
     /**
+     * @param (callable(callable(T):void,callable(\Throwable):void):void)|null $canceller
      * @return CallbackPromiseAdapter<T>
      */
     public function getPromiseTestAdapter(callable $canceller = null): CallbackPromiseAdapter
     {
-        /** @var ?FulfilledPromise<T> */
+        /** @var ?FulfilledPromise<T> $promise */
         $promise = null;
 
         return new CallbackPromiseAdapter([

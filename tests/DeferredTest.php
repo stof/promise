@@ -9,9 +9,13 @@ use React\Promise\PromiseAdapter\CallbackPromiseAdapter;
  */
 class DeferredTest extends TestCase
 {
+    /**
+     * @use PromiseTest\FullTestTrait<T>
+     */
     use PromiseTest\FullTestTrait;
 
     /**
+     * @param (callable(callable(T):void,callable(\Throwable):void):void)|null $canceller
      * @return CallbackPromiseAdapter<T>
      */
     public function getPromiseTestAdapter(callable $canceller = null): CallbackPromiseAdapter

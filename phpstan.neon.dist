@@ -1,5 +1,6 @@
 parameters:
     level: max
+    checkMissingCallableSignature: true
 
     paths:
         - src/

@@ -8,6 +8,9 @@ use PHPUnit\Framework\TestCase as BaseTestCase;
 
 class TestCase extends BaseTestCase
 {
+    /**
+     * @return callable(mixed...): void
+     */
     public function expectCallableExactly(int $amount): callable
     {
         $mock = $this->createCallableMock();
@@ -17,6 +20,9 @@ class TestCase extends BaseTestCase
         return $mock;
     }
 
+    /**
+     * @return callable(mixed...): void
+     */
     public function expectCallableOnce(): callable
     {
         $mock = $this->createCallableMock();
@@ -26,6 +32,9 @@ class TestCase extends BaseTestCase
         return $mock;
     }
 
+    /**
+     * @return callable(mixed...): void
+     */
     public function expectCallableNever(): callable
     {
         $mock = $this->createCallableMock();
@@ -35,7 +44,7 @@ class TestCase extends BaseTestCase
         return $mock;
     }
 
-    /** @return MockObject&callable */
+    /** @return MockObject&(callable(mixed...): void) */
     protected function createCallableMock(): MockObject
     {
         $builder = $this->getMockBuilder(\stdClass::class);

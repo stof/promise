@@ -263,6 +263,11 @@ function set_rejection_handler(?callable $callback): ?callable
 
 /**
  * @internal
+ * @template TReason of \Throwable
+ * @template TRejected
+ * @param callable(TReason): (PromiseInterface<TRejected>|TRejected) $callback
+ *
+ * @phpstan-assert-if-true TReason $reason
  */
 function _checkTypehint(callable $callback, \Throwable $reason): bool
 {

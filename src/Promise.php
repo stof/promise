@@ -34,7 +34,7 @@ final class Promise implements PromiseInterface
         $this->canceller = $canceller;
 
         // Explicitly overwrite arguments with null values before invoking
-        // resolver function. This ensure that these arguments do not show up
+        // resolver function. This ensures that these arguments do not show up
         // in the stack trace in PHP 7+ only.
         $cb = $resolver;
         $resolver = $canceller = null;
@@ -166,9 +166,17 @@ final class Promise implements PromiseInterface
         return $this->finally($onFulfilledOrRejected);
     }
 
+    /**
+     * @template TFulfilled
+     * @template TRejected
+     * @param ?(callable((T is void ? null : T)): (PromiseInterface<TFulfilled>|TFulfilled)) $onFulfilled
+     * @param ?(callable(\Throwable): (PromiseInterface<TRejected>|TRejected)) $onRejected
+     * @return callable((callable(($onRejected is null ? ($onFulfilled is null ? T : TFulfilled) : ($onFulfilled is null ? T|TRejected : TFulfilled|TRejected))): void), (callable(\Throwable): void)): void
+     */
     private function resolver(callable $onFulfilled = null, callable $onRejected = null): callable
     {
         return function (callable $resolve, callable $reject) use ($onFulfilled, $onRejected): void {
+            /** @param PromiseInterface<T> $promise */
             $this->handlers[] = static function (PromiseInterface $promise) use ($onFulfilled, $onRejected, $resolve, $reject): void {
                 $promise = $promise->then($onFulfilled, $onRejected);
 
@@ -246,7 +254,7 @@ final class Promise implements PromiseInterface
      */
     private function call(callable $cb): void
     {
-        // Explicitly overwrite argument with null value. This ensure that this
+        // Explicitly overwrite argument with null value. This ensures that this
         // argument does not show up in the stack trace in PHP 7+ only.
         $callback = $cb;
         $cb = null;
@@ -254,7 +262,7 @@ final class Promise implements PromiseInterface
         // Use reflection to inspect number of arguments expected by this callback.
         // We did some careful benchmarking here: Using reflection to avoid unneeded
         // function arguments is actually faster than blindly passing them.
-        // Also, this helps avoiding unnecessary function arguments in the call stack
+        // Also, this helps to avoid unnecessary function arguments in the call stack
         // if the callback creates an Exception (creating garbage cycles).
         if (\is_array($callback)) {
             $ref = new \ReflectionMethod($callback[0], $callback[1]);
@@ -274,7 +282,7 @@ final class Promise implements PromiseInterface
                 // By using static callbacks that are not bound to this instance
                 // and passing the target promise instance by reference, we can
                 // still execute its resolving logic and still clear this
-                // reference when settling the promise. This helps avoiding
+                // reference when settling the promise. This helps to avoid
                 // garbage cycles if any callback creates an Exception.
                 // These assumptions are covered by the test suite, so if you ever feel like
                 // refactoring this, go ahead, any alternative suggestions are welcome!

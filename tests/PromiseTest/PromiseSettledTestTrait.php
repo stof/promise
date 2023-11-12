@@ -6,8 +6,15 @@ use React\Promise\Internal\RejectedPromise;
 use React\Promise\PromiseAdapter\PromiseAdapterInterface;
 use React\Promise\PromiseInterface;
 
+/**
+ * @template T
+ */
 trait PromiseSettledTestTrait
 {
+    /**
+     * @param (callable(callable(T):void,callable(\Throwable):void):void)|null $canceller
+     * @return PromiseAdapterInterface<T>
+     */
     abstract public function getPromiseTestAdapter(callable $canceller = null): PromiseAdapterInterface;
 
     /** @test */

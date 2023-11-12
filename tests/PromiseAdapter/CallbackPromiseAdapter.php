@@ -10,11 +10,11 @@ use React\Promise\PromiseInterface;
  */
 class CallbackPromiseAdapter implements PromiseAdapterInterface
 {
-    /** @var callable[] */
+    /** @var array{promise: callable(): PromiseInterface<T>, resolve: callable(T): void, reject: callable(\Throwable): void, settle: callable(T): void} */
     private $callbacks;
 
     /**
-     * @param callable[] $callbacks
+     * @param array{promise: callable(): PromiseInterface<T>, resolve: callable(T): void, reject: callable(\Throwable): void, settle: callable(T): void} $callbacks
      */
     public function __construct(array $callbacks)
     {
@@ -34,12 +34,12 @@ class CallbackPromiseAdapter implements PromiseAdapterInterface
         ($this->callbacks['resolve'])(...func_get_args());
     }
 
-    public function reject(): void
+    public function reject(\Throwable $reason): void
     {
         ($this->callbacks['reject'])(...func_get_args());
     }
 
-    public function settle(): void
+    public function settle($value): void
     {
         ($this->callbacks['settle'])(...func_get_args());
     }

@@ -9,8 +9,15 @@ use stdClass;
 use function React\Promise\reject;
 use function React\Promise\resolve;
 
+/**
+ * @template T
+ */
 trait PromiseFulfilledTestTrait
 {
+    /**
+     * @param (callable(callable(T):void,callable(\Throwable):void):void)|null $canceller
+     * @return PromiseAdapterInterface<T>
+     */
     abstract public function getPromiseTestAdapter(callable $canceller = null): PromiseAdapterInterface;
 
     /** @test */

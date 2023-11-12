@@ -10,6 +10,9 @@ use React\Promise\PromiseAdapter\CallbackPromiseAdapter;
  */
 class PromiseTest extends TestCase
 {
+    /**
+     * @use PromiseTest\FullTestTrait<T>
+     */
     use PromiseTest\FullTestTrait;
 
     /**

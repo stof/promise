@@ -14,6 +14,9 @@ if (!class_exists(Fiber::class)) {
             // NOOP
         }
 
+        /**
+         * @param callable(): void $callback
+         */
         public function __construct(callable $callback)
         {
             assert(is_callable($callback));

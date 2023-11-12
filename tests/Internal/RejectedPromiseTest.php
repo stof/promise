@@ -9,8 +9,14 @@ use React\Promise\PromiseTest\PromiseRejectedTestTrait;
 use React\Promise\PromiseTest\PromiseSettledTestTrait;
 use React\Promise\TestCase;
 
+/**
+ * @template T
+ */
 class RejectedPromiseTest extends TestCase
 {
+    /**
+     * @use PromiseSettledTestTrait<T>
+     */
     use PromiseSettledTestTrait,
         PromiseRejectedTestTrait;
 
